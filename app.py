@@ -23,8 +23,14 @@ embeddings=download_hugging_face_embeddings()
 
 os.environ['PINECONE_API_KEY'] = PINECONE_API_KEY
 p = pc(api_key=PINECONE_API_KEY)
-index1 = p.Index("medical-bot")
-index_name = "medical-bot"
+# index1 = p.Index("medical-bot")
+# index_name = "medical-bot"
+
+index1 = p.Index("bhagwat-gita")
+index_name = "bhagwat-gita"
+
+
+
 
 #loading the index
 docsearch=PineconeVectorStore.from_existing_index(index_name, embeddings)
@@ -36,14 +42,15 @@ chain_type_kwargs={"prompt": PROMPT}
 
 llm=CTransformers(model="/Users/piyushpandey955/Desktop/AIML/gen ai/medical chatbot project/Medical-Chatbot/model/llama-2-7b-chat.ggmlv3.q4_0.bin",
                   model_type="llama",
-                  config={'max_new_tokens':512,
-                          'temperature':0.75}
+                  config={'max_new_tokens':2000,
+                          'temperature':0.75,
+                          'context_length': 8000}
                 )
 
 
 # Use the Pinecone vectorstore from Langchain
 vectorstore = Pinecone(
-    index=pinecone.Index(index_name, host='https://medical-bot-9d82pte.svc.aped-4627-b74a.pinecone.io'),
+    index=pinecone.Index(index_name, host='https://bhagwat-gita-9d82pte.svc.aped-4627-b74a.pinecone.io'),
     embedding_function=embeddings.embed_query,
     text_key="text"
     )

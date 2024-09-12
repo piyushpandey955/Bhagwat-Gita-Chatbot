@@ -20,8 +20,11 @@ embedding=download_hugging_face_embeddings()
 
 os.environ['PINECONE_API_KEY'] = PINECONE_API_KEY
 pc = Pinecone(api_key=PINECONE_API_KEY)
-index = pc.Index("medical-bot")
-index_name="medical-bot"
+# index = pc.Index("medical-bot")
+# index_name="medical-bot"
+
+index1 = p.Index("bhagwat-gita")
+index_name = "bhagwat-gita"
 
 #creating embeddings for each of the text chunks and storing
 docsearch=PineconeVectorStore.from_texts([t.page_content for t in text_chunks], embedding, index_name=index_name)
